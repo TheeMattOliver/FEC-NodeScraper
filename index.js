@@ -3,35 +3,36 @@ const cheerio = require('cheerio'); // to use jQuery syntax from within Node
 const Table = require('cli-table');
 const config = require('./config')
 
+// let table = new Table({
+// 		head: ['date', 'recipient', 'city', 'state', 'amount', 'description'], 
+// 		colWidths: [20, 20, 15, 10, 15, 20]
+// })
+
 let table = new Table({
-		head: ['date', 'recipient', 'city', 'state', 'amount', 'description'], 
-		colWidths: [20, 20, 15, 10, 15, 20]
+		head: ['date', 'donor', 'city', 'state', 'amount', 'occupation', 'employer'], 
+		colWidths: [20, 20, 15, 10, 15, 20, 20]
 })
 
-//spent:
 const options = {
-  url: `https://api.open.fec.gov/v1/schedules/schedule_b/?api_key=` + config.fec.api_key + `&sort_hide_null=false&sort_nulls_last=true&sort=-disbursement_date&per_page=100&committee_id=C00498121&two_year_transaction_period=2018`,
-  json: true 
-
 //received:
-// url: 'https://api.open.fec.gov/v1/committee/C00498121/schedules/schedule_a/by_employer/?api_key=5yyI90SU3Xb73TVlv4wrEhQxYcCwMWCywQiGdYbJ&sort_hide_null=false&sort_nulls_last=true&sort=-total&per_page=100&page=1&cycle=2018',
-// json: true
+url: `https://api.open.fec.gov/v1/schedules/schedule_a/?api_key=` + config.fec.api_key + `&sort_hide_null=false&sort_nulls_last=true&sort=-contribution_receipt_date&per_page=100&committee_id=C00498121&two_year_transaction_period=2018&is_individual=true`,
+json: true
 
 }
 
 request(options)
   .then((data) => {
-  	
-    let fecData = [];
     
+    let fecData = [];
+
     var i;
     for (var i =0; i < data.results.length; i++) {
-    	fecData.push({date: data.results[i].disbursement_date, name: data.results[i].recipient_name.toProperCase(), recipient_city: data.results[i].recipient_city.toProperCase(), recipient_state: data.results[i].recipient_state, disbursement_amount: data.results[i].disbursement_amount, disbursement_description: data.results[i].disbursement_description.toProperCase()});
+    	handleNullValues(data.results[i])
+    	fecData.push({load_date: data.results[i].load_date, contributor_name: data.results[i].contributor_name, contributor_city: data.results[i].contributor_city, contributor_state: data.results[i].contributor_state, contribution_receipt_amount: data.results[i].contribution_receipt_amount, contributor_occupation: data.results[i].contributor_occupation, contributor_employer: data.results[i].contributor_employer});
     }
-    
-    process.stdout.write('Loading FEC data');
-    getFecDataAndPushIntoTable(fecData);
 
+    // process.stdout.write('Loading FEC data');
+    getFecDataAndPushIntoTable(fecData);
   })
   .catch((err) => {
   	console.log(err)
@@ -43,14 +44,15 @@ function getFecDataAndPushIntoTable(fecData) {
 	function next() {
 		if (i < fecData.length) {
 			var options = {
-				url: `https://www.fec.gov/data/committee/C00498121/?tab=spending` + fecData[i].recipient_name,
+				url: `https://www.fec.gov/data/committee/C00498121/?cycle=2018&tab=raising#individual-contribution-transactions` + fecData[i].contributor_name,
 				transform: body => cheerio.load(body)
 			}
 			request(options)
 			  .then(function () {
 			  	process.stdout.write(`.`)
 			  	
-			  	table.push([fecData[i].date, fecData[i].name, fecData[i].recipient_city, fecData[i].recipient_state, fecData[i].disbursement_amount, fecData[i].disbursement_description]);
+			  	table.push([fecData[i].load_date, fecData[i].contributor_name.toProperCase(), fecData[i].contributor_city.toProperCase(), fecData[i].contributor_state, fecData[i].contribution_receipt_amount, fecData[i].contributor_occupation.toProperCase(), fecData[i].contributor_employer.toProperCase()])
+
     			++i;
 			  	return next();
 			  })
@@ -65,6 +67,16 @@ function getFecDataAndPushIntoTable(fecData) {
 function printData() {
 	console.log("✅");
 	console.log(table.toString())
+}
+
+// handle null values
+function handleNullValues(obj) {
+	Object.keys(obj).forEach(function(key) {
+	    if(obj[key] === null) {
+	        obj[key] = '-';
+	    }
+	})
+  return obj
 }
 
 // properCase helper
