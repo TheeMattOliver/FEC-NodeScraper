@@ -8,7 +8,7 @@ const config = require('./config')
 // 		colWidths: [20, 20, 15, 10, 15, 20]
 // })
 
-let table = new Table({
+let receiptsTable = new receiptsTable({
 		head: ['date', 'donor', 'city', 'state', 'amount', 'occupation', 'employer'], 
 		colWidths: [20, 20, 15, 10, 15, 20, 20]
 })
@@ -32,13 +32,13 @@ request(options)
     }
 
     // process.stdout.write('Loading FEC data');
-    getFecDataAndPushIntoTable(fecData);
+    getFecDataAndPushIntoReceiptsTable(fecData);
   })
   .catch((err) => {
   	console.log(err)
   })
 
-function getFecDataAndPushIntoTable(fecData) {
+function getFecDataAndPushIntoReceiptsTable(fecData) {
 	var i = 0
 	// next helper
 	function next() {
@@ -51,7 +51,7 @@ function getFecDataAndPushIntoTable(fecData) {
 			  .then(function () {
 			  	process.stdout.write(`.`)
 			  	
-			  	table.push([fecData[i].load_date, fecData[i].contributor_name.toProperCase(), fecData[i].contributor_city.toProperCase(), fecData[i].contributor_state, fecData[i].contribution_receipt_amount, fecData[i].contributor_occupation.toProperCase(), fecData[i].contributor_employer.toProperCase()])
+			  	receiptsTable.push([fecData[i].load_date, fecData[i].contributor_name.toProperCase(), fecData[i].contributor_city.toProperCase(), fecData[i].contributor_state, fecData[i].contribution_receipt_amount, fecData[i].contributor_occupation.toProperCase(), fecData[i].contributor_employer.toProperCase()])
 
     			++i;
 			  	return next();
@@ -66,7 +66,7 @@ function getFecDataAndPushIntoTable(fecData) {
 // printData helper
 function printData() {
 	console.log("✅");
-	console.log(table.toString())
+	console.log(receiptsTable.toString())
 }
 
 // handle null values
