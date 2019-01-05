@@ -1,5 +1,0 @@
-button class='js-export button button--cta button--export is-disabled'
-
-button button--cta download__button
-
-href="https://cg-519a459a-0ea3-42c2-b7bc-fa1143481f74.s3.us-gov-west-1.amazonaws.com/ac0c6100afa6963a020be24b91bc39c8ffc597cb6038ded03ade87e6.csv?response-content-disposition=filename%3Dschedule_b-2019-01-04T23%3A09%3A51.csv&AWSAccessKeyId=AKIAL5GZK2QR6KA246SA&Signature=PR%2FJ4FbHeuvZPQRkf7WIVMkjpf4%3D&Expires=1547269796"
