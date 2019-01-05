@@ -2,7 +2,6 @@ const request = require('request-promise');
 const cheerio = require('cheerio'); // to use jQuery syntax from within Node
 const Table = require('cli-table');
 const config = require('./config')
-const printData = require('./util/helpers')
 
 let table = new Table({
 		head: ['date', 'recipient', 'city', 'state', 'amount', 'description'], 
