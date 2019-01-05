@@ -9,12 +9,13 @@ let table = new Table({
 
 //spent:
 const options = {
-  url: 'https://api.open.fec.gov/v1/schedules/schedule_b/?api_key=5yyI90SU3Xb73TVlv4wrEhQxYcCwMWCywQiGdYbJ&sort_hide_null=false&sort_nulls_last=true&sort=-disbursement_date&per_page=100&committee_id=C00498121&two_year_transaction_period=2018',
+  url: 'https://api.open.fec.gov/v1/schedules/schedule_b/?' + `${config.fec.api_key}` +'&sort_hide_null=false&sort_nulls_last=true&sort=-disbursement_date&per_page=100&committee_id=C00498121&two_year_transaction_period=2018',
   json: true 
 
 //received:
 // url: 'https://api.open.fec.gov/v1/committee/C00498121/schedules/schedule_a/by_employer/?api_key=5yyI90SU3Xb73TVlv4wrEhQxYcCwMWCywQiGdYbJ&sort_hide_null=false&sort_nulls_last=true&sort=-total&per_page=100&page=1&cycle=2018',
 // json: true
+
 }
 
 request(options)
