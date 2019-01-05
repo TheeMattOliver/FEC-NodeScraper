@@ -1,6 +1,6 @@
 # FEC-NodeScraper
 
-## Basic scraper, pulling FEC data.
+## Basic proof-of-concept to pull FEC data for itemized contributions and expenditures.
 
 1. Clone repo
 2. Npm install
