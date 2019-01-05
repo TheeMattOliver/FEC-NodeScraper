@@ -1,6 +1,7 @@
 const request = require('request-promise');
 const cheerio = require('cheerio'); // to use jQuery syntax from within Node
 const Table = require('cli-table');
+const config = require('./config')
 
 let table = new Table({
 		head: ['date', 'recipient', 'city', 'state', 'amount', 'description'], 
@@ -9,7 +10,7 @@ let table = new Table({
 
 //spent:
 const options = {
-  url: 'https://api.open.fec.gov/v1/schedules/schedule_b/?' + `${config.fec.api_key}` +'&sort_hide_null=false&sort_nulls_last=true&sort=-disbursement_date&per_page=100&committee_id=C00498121&two_year_transaction_period=2018',
+  url: `https://api.open.fec.gov/v1/schedules/schedule_b/?api_key=` + config.fec.api_key + `&sort_hide_null=false&sort_nulls_last=true&sort=-disbursement_date&per_page=100&committee_id=C00498121&two_year_transaction_period=2018`,
   json: true 
 
 //received:
