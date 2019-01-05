@@ -2,6 +2,7 @@ const request = require('request-promise');
 const cheerio = require('cheerio'); // to use jQuery syntax from within Node
 const Table = require('cli-table');
 const config = require('./config')
+const printData = require('./util/helpers')
 
 let table = new Table({
 		head: ['date', 'recipient', 'city', 'state', 'amount', 'description'], 
@@ -65,3 +66,13 @@ function printData() {
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
+
+// handle null values
+exports.handleNullValues = function(obj) {
+	Object.keys(obj).forEach(function(key) {
+	    if(obj[key] === null) {
+	        obj[key] = '-';
+	    }
+	})
+  return obj
+}
