@@ -26,7 +26,6 @@ request(options)
     for (var i =0; i < data.results.length; i++) {
     	fecData.push({date: data.results[i].disbursement_date, name: data.results[i].recipient_name.toProperCase(), recipient_city: data.results[i].recipient_city.toProperCase(), recipient_state: data.results[i].recipient_state, disbursement_amount: data.results[i].disbursement_amount, disbursement_description: data.results[i].disbursement_description.toProperCase()});
     }
-    // 	console.log('On ' + data.results[i].disbursement_date + ' Roger Williams paid ' + data.results[i].recipient_name.toProperCase() + ' in ' + data.results[i].recipient_city.toProperCase() + ', ' + data.results[i].recipient_state.toProperCase() + ' $' + data.results[i].disbursement_amount + ' for ' + data.results[i].disbursement_description.toProperCase() + '.')
     
     process.stdout.write('Loading FEC data');
     getFecDataAndPushIntoTable(fecData);
@@ -36,11 +35,9 @@ request(options)
   	console.log(err)
   })
 
-// printData();
-
 function getFecDataAndPushIntoTable(fecData) {
 	var i = 0
-	// 
+	// next helper
 	function next() {
 		if (i < fecData.length) {
 			var options = {
@@ -62,12 +59,13 @@ function getFecDataAndPushIntoTable(fecData) {
 	return next();
 }
 
+// printData helper
 function printData() {
 	console.log("✅");
 	console.log(table.toString())
 }
 
-// fix all caps
+// properCase helper
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
