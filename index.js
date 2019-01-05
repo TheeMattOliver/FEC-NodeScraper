@@ -2,7 +2,6 @@ const request = require('request-promise');
 const cheerio = require('cheerio'); // to use jQuery syntax from within Node
 const Table = require('cli-table');
 const config = require('./config')
-const helper = require('./utils/helpers')
 
 let receiptsTable = new Table({
 	head: ['date', 'donor', 'city', 'state', 'amount', 'occupation', 'employer'], 
@@ -23,7 +22,7 @@ request(receiptOptions)
 
     var i;
     for (var i =0; i < data.results.length; i++) {
-    	helper.handleNullValues(data.results[i])
+    	handleNullValues(data.results[i])
     	fecReceiptsData.push({load_date: data.results[i].load_date, contributor_name: data.results[i].contributor_name, contributor_city: data.results[i].contributor_city, contributor_state: data.results[i].contributor_state, contribution_receipt_amount: data.results[i].contribution_receipt_amount, contributor_occupation: data.results[i].contributor_occupation, contributor_employer: data.results[i].contributor_employer});
     }
 
