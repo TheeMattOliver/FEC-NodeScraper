@@ -7,3 +7,4 @@
 3. Add config vars to config_EXAMPLE and remove '_EXAMPLE' from file name.
 4. For campaign expenditures: Run 'node index.js'
 5. For campaign donations: Run 'node receipts.js'
+6. To see only PAC contributions: Run 'node pacs.js'
