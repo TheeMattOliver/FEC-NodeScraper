@@ -1,4 +1,6 @@
 node_modules
 example-data*
+individual-contributions-example.js
+pac-contributions-example.json
 
 config*
