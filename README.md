@@ -1,6 +1,6 @@
 # FEC-NodeScraper
 
-## Basic proof-of-concept to pull FEC data for itemized contributions and expenditures.
+## Basic proof-of-concept to pull FEC data for itemized contributions and expenditures in NodeJS.
 
 1. Clone repo
 2. Npm install
@@ -8,3 +8,5 @@
 4. For campaign expenditures: Run 'node index.js'
 5. For campaign donations: Run 'node receipts.js'
 6. To see only PAC contributions: Run 'node pacs.js'
+
+![](FEC-scraper-demo.gif)
