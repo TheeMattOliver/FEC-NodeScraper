@@ -9,4 +9,4 @@
 5. For campaign donations: Run 'node receipts.js'
 6. To see only PAC contributions: Run 'node pacs.js'
 
-![](FEC-scraper-demo.gif)
+![](FEC-scraper-demo-2.gif)
