@@ -68,7 +68,7 @@ const config = require('./config')
 	// handle null values
 	function handleNullValues(obj) {
 		Object.keys(obj).forEach(function(key) {
-		    if(obj[key] === null) {
+		    if(!obj[key]) {
 		        obj[key] = '-';
 		    }
 		})
