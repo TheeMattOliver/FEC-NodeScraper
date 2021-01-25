@@ -10,7 +10,7 @@ let receiptsTable = new Table({
 
 const receiptOptions = {
 //received:
-url: `https://api.open.fec.gov/v1/schedules/schedule_a/?api_key=` + config.fec.api_key + `&sort_hide_null=false&sort_nulls_last=true&sort=-contribution_receipt_date&per_page=100&committee_id=C00498121&two_year_transaction_period=2018&is_individual=true`,
+url: `https://api.open.fec.gov/v1/schedules/schedule_a/?api_key=` + config.fec.api_key + `&sort_hide_null=false&sort_nulls_last=true&sort=-contribution_receipt_date&per_page=100&committee_id=` + config.fec.committee_id + `&two_year_transaction_period=2020&is_individual=true`,
 json: true
 
 }
@@ -39,7 +39,7 @@ function getFecReceiptsDataAndPushIntoReceiptsTable(fecReceiptsData) {
 	function next() {
 		if (i < fecReceiptsData.length) {
 			var options = {
-				url: `https://www.fec.gov/data/committee/C00498121/?cycle=2018&tab=raising#individual-contribution-transactions` + fecReceiptsData[i].contributor_name,
+				url: `https://www.fec.gov/data/committee/` + config.fec.committee_id + `/?cycle=2020&tab=raising#individual-contribution-transactions` + fecReceiptsData[i].contributor_name,
 				transform: body => cheerio.load(body)
 			}
 			request(options)
